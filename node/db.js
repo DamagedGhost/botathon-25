@@ -1,31 +1,35 @@
 const sql = require('mssql');
+const config = require('./config');
 
-const dbSettings = {
-    user: 'sa',
-    password: 'Admin123', // Asegúrate que esta sea la clave real del servidor
-    server: '18.214.144.253',
-    database: 'master', // Empezamos con 'master' para asegurar que conecte sí o sí
-    options: {
-        encrypt: false, // Importante para IPs directas o servidores sin SSL configurado
-        trustServerCertificate: true, // OBLIGATORIO para AWS/Azure sin certificados de pago
-        enableArithAbort: true
-    },
-    pool: {
-        max: 10,
-        min: 0,
-        idleTimeoutMillis: 30000
-    }
+const memory = {
+    volunteers: [],
+    institutes: [],
+    campaigns: [],
+    participations: [],
+    skills: [],
+    users: [],
 };
 
-async function getConnection() {
-    try {
-        const pool = await sql.connect(dbSettings);
-        return pool;
-    } catch (error) {
-        // Este log es vital para saber por qué falla
-        console.error('🔴 Error FATAL de conexión a SQL Server:', error);
-        throw error;
-    }
+function getProvider() {
+    return config.dbProvider;
 }
 
-module.exports = { getConnection, sql };
+function getMemory() {
+    return memory;
+}
+
+async function getConnection() {
+    if (getProvider() !== 'sqlserver') return null;
+    const dbSettings = {
+        user: config.sql.user,
+        password: config.sql.password,
+        server: config.sql.server,
+        database: config.sql.database,
+        options: config.sql.options,
+        pool: config.sql.pool,
+    };
+    const pool = await sql.connect(dbSettings);
+    return pool;
+}
+
+module.exports = { getConnection, sql, getProvider, getMemory };

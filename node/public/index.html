@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Teleton Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Teleton Admin</h1>
+    </header>
+    <main class="container">
+      <section id="login">
+        <h2>Ingreso</h2>
+        <form id="loginForm">
+          <input type="email" id="email" placeholder="Email" required />
+          <input type="password" id="password" placeholder="Contraseña" required />
+          <button type="submit">Entrar</button>
+        </form>
+        <div id="loginError" class="error"></div>
+      </section>
+      <section id="dashboard" class="hidden">
+        <div class="cards">
+          <div class="card">
+            <div class="card-title">Voluntarios históricos</div>
+            <div id="totalVoluntarios" class="metric">0</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Tasa asistencia</div>
+            <div id="tasaAsistencia" class="metric">0%</div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="panel">
+            <h3>Distribución geográfica</h3>
+            <div id="map" class="map"></div>
+          </div>
+          <div class="panel">
+            <h3>Participación a lo largo del tiempo</h3>
+            <canvas id="timeline"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+  </html>
